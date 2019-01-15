@@ -74,15 +74,28 @@ class Cuboid
     )
   end
 
-  # Bonus points: Allow your objects to rotate (to keep it simple, only at 90
-  # degree angles). The "tricky" part about the rotation is that - imagine the
-  # origin is walled - a rotation of an object that is up against a corner would
-  # also require the object to shift if you are rotating the object around its
-  # origin. This restriction exists because the objects are actually part of a
-  # bin packing algorithm - meaning the objects are inside a box and can only
-  # exist within the walls of the outer box.
-  
-  # TODO: Account for the restriction of the container
+  # The "tricky" part about the rotation is that - imagine the origin is walled
+  # - a rotation of an object that is up against a corner would also require the
+  # object to shift if you are rotating the object around its origin. This restriction
+  # exists because the objects are actually part of a bin packing algorithm - meaning
+  # the objects are inside a box and can only exist within the walls of the outer
+  # box.
+
+  def within?(other)
+    # All of the following conditions must be met for the cuboid to be WITHIN
+    # the other. This will return TRUE where the cuboid is inside the other and
+    # FALSE otherwise.
+    (
+      self.vertices[0][0] >= other.vertices[0][0] &&
+      self.vertices[0][1] >= other.vertices[0][1] &&
+      self.vertices[0][2] >= other.vertices[0][2] &&
+      self.vertices[7][0] <= other.vertices[7][0] &&
+      self.vertices[7][1] <= other.vertices[7][1] &&
+      self.vertices[7][2] <= other.vertices[7][2]
+    )
+  end
+
+  # Allow your objects to rotate (to keep it simple, only at 90 degree angles).
   # This version considers rotation to be swapping two dimensions and leaving
   # the origin in place. Phase two will be to consider the container.
   def rotate!(axis)
