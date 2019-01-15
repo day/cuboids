@@ -5,12 +5,12 @@ describe Cuboid do
 
   # TODO: Consider changing these to FactoryGirl
   let(:our_cuboid) { Cuboid.new([0,0,0], [2,4,6]) }
-  let(:cube_to_the_right) { Cuboid.new([2,0,0], [3,3,3]) }
-  let(:cube_above) { Cuboid.new([0,4,0], [3,3,3]) }
+  let(:cube_to_the_right) { Cuboid.new([2,0,0], [3,3,3], is_container: true ) }
+  let(:cube_above) { Cuboid.new([0,4,0], [3,3,3], is_container: true ) }
   let(:cube_that_intersects) { Cuboid.new([1,0,0], [3,3,3]) }
-  let(:cube_that_contains) { Cuboid.new([0,0,0], [6,6,6]) }
-  let(:cube_somewhere_else) { Cuboid.new([9,9,9], [6,6,6]) }
-  let(:identical_cuboid) { Cuboid.new([0,0,0], [2,4,6]) }
+  let(:cube_that_contains) { Cuboid.new([0,0,0], [6,6,6], is_container: true ) }
+  let(:cube_somewhere_else) { Cuboid.new([9,9,9], [6,6,6], is_container: true) }
+  let(:identical_cuboid) { Cuboid.new([0,0,0], [2,4,6], is_container: true) }
   
   context 'a freshly initialized cuboid' do
     it 'has the length we assigned' do

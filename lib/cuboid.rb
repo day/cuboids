@@ -5,11 +5,13 @@ class Cuboid
   # That way you could represent one by having an origin (z,y,x) and length,
   # width, height. Of course, you should be able to create (initialize) an
   # object at a certain origin, with a certain length/width/height.
-  def initialize(origin, dimensions)
+  def initialize(origin, dimensions, is_container=false)
     # an array of three values: x, y, z (relative to origin of container)
     @origin = origin
     # an array of three values: x, y, z (length, width, height)
     @dimensions = dimensions
+    # indicates the cuboid may contain other cuboids
+    @is_container = is_container
   end
 
   def length
@@ -80,12 +82,16 @@ class Cuboid
   # exists because the objects are actually part of a bin packing algorithm - meaning
   # the objects are inside a box and can only exist within the walls of the outer
   # box.
+  def is_container?
+    @is_container
+  end
 
   def within?(other)
     # All of the following conditions must be met for the cuboid to be WITHIN
     # the other. This will return TRUE where the cuboid is inside the other and
     # FALSE otherwise.
     (
+      other.is_container? &&
       self.vertices[0][0] >= other.vertices[0][0] &&
       self.vertices[0][1] >= other.vertices[0][1] &&
       self.vertices[0][2] >= other.vertices[0][2] &&
