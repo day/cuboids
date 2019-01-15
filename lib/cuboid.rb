@@ -5,6 +5,7 @@ class Cuboid
   # That way you could represent one by having an origin (z,y,x) and length,
   # width, height. Of course, you should be able to create (initialize) an
   # object at a certain origin, with a certain length/width/height.
+  # TODO: Consider if all non-containers must have a container?
   def initialize(origin, dimensions, is_container=false)
     # an array of three values: x, y, z (relative to origin of container)
     @origin = origin
@@ -30,6 +31,8 @@ class Cuboid
   end
 
   # You should also be able to move your object to a different origin.
+  # TODO: Raise an error if the move would cause an intersection or be outside the container
+  # TODO: Consider rules for automatically shifting to fit
   def move_to!(coordinates)
     @origin = coordinates
     self
@@ -103,7 +106,9 @@ class Cuboid
 
   # Allow your objects to rotate (to keep it simple, only at 90 degree angles).
   # This version considers rotation to be swapping two dimensions and leaving
-  # the origin in place. Phase two will be to consider the container.
+  # the origin in place.
+  # TODO: Raise an error if the rotation would cause an intersection or be outside the container
+  # TODO: Consider rules for automatically shifting to fit
   def rotate!(axis)
     # Rotation may change origin due to necessary shifting
     case axis
