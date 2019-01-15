@@ -49,10 +49,18 @@ describe Cuboid do
     end
   end
 
-  # TODO: Add complete spec for rotate! method
-  context 'the as-yet-nonexistent rotate! method' do
-    it 'raises the expected error' do
-      expect {our_cuboid.rotate!(0,90)}.to raise_error('method rotate not yet defined')
+  # TODO: Refactor this spec to account for the container when we have one
+  context 'the rotate! method' do
+    context 'changes the dimensions and thus the vertices' do
+      it 'when rotating around the x-axis' do
+        expect(our_cuboid.rotate!(:x).vertices).to eq [[0,0,0], [2,0,0], [2,6,0], [0,6,0], [0,6,4], [0,0,4], [2,0,4], [2,6,4]]
+      end
+      it 'when rotating around the y-axis' do
+        expect(our_cuboid.rotate!(:y).vertices).to eq [[0,0,0], [6,0,0], [6,4,0], [0,4,0], [0,4,2], [0,0,2], [6,0,2], [6,4,2]]
+      end
+      it 'when rotating around the z-axis' do
+        expect(our_cuboid.rotate!(:z).vertices).to eq [[0,0,0], [4,0,0], [4,2,0], [0,2,0], [0,2,6], [0,0,6], [4,0,6], [4,2,6]]
+      end
     end
   end
 

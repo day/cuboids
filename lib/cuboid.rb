@@ -81,10 +81,35 @@ class Cuboid
   # origin. This restriction exists because the objects are actually part of a
   # bin packing algorithm - meaning the objects are inside a box and can only
   # exist within the walls of the outer box.
-  # TODO: Define the rotate method
-  def rotate!(axis, degrees)
-    # rotation may change origin due to necessary shifting
-    raise 'method rotate not yet defined'
+  
+  # TODO: Account for the restriction of the container
+  # This version considers rotation to be swapping two dimensions and leaving
+  # the origin in place. Phase two will be to consider the container.
+  def rotate!(axis)
+    # Rotation may change origin due to necessary shifting
+    case axis
+      when :x # x-axis = length = index 0
+        # temp vars for the new dimensions
+        new_z = @dimensions[1]
+        new_y = @dimensions[2]
+        # length stays the same
+        @dimensions[1] = new_y
+        @dimensions[2] = new_z
+      when :y # y-axis = width = index 1
+        # temp vars for the new dimensions
+        new_z = @dimensions[0]
+        new_x = @dimensions[2]
+        # width stays the same
+        @dimensions[0] = new_x
+        @dimensions[2] = new_z
+      when :z # z-axis = height = index 2
+        # temp vars for the new dimensions
+        new_y = @dimensions[0]
+        new_x = @dimensions[1]
+        # height stays the same
+        @dimensions[0] = new_x
+        @dimensions[1] = new_y
+    end
+    self
   end
-
 end
