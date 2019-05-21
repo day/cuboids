@@ -109,8 +109,9 @@ class Cuboid
   # the origin in place.
   # TODO: Raise an error if the rotation would cause an intersection or be outside the container
   # TODO: Consider rules for automatically shifting to fit
-  def rotate!(axis)
-    # Rotation may change origin due to necessary shifting
+  def rotate!(axis, other=null)
+    # Save original dimensions for possible reversion
+    original_dimensions = @dimensions
     case axis
       when :x # x-axis = length = index 0
         # temp vars for the new dimensions
@@ -133,6 +134,12 @@ class Cuboid
         # height stays the same
         @dimensions[0] = new_x
         @dimensions[1] = new_y
+    end
+    # Test rotated cuboid for intersection
+    if other and self.intersects(other)
+      # Revert
+      @dimensions = original_dimensions
+      raise "Rotation would cause an intersection!"
     end
     self
   end
